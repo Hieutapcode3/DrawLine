@@ -19,17 +19,16 @@ public class PlayerController : MonoBehaviour
         Vector2 mousePos = Input.mousePosition;
         if (mousePos.x >= 0 && mousePos.x <= Screen.width && mousePos.y >= 0 && mousePos.y <= Screen.height)
         {
-            Vector2 worldMousePos = Camera.main.ScreenToWorldPoint(mousePos);
-            transform.position = worldMousePos;
-            if (IsMouseOverWall(worldMousePos))
-            {
-                FinishDrawing();
-                canDraw = false;
-                return; 
-            }
-
             if (!RectTransformUtility.RectangleContainsScreenPoint(containerRect, mousePos, Camera.main) && Time.timeScale != 0)
             {
+                Vector2 worldMousePos = Camera.main.ScreenToWorldPoint(mousePos);
+                transform.position = worldMousePos;
+                if (IsMouseOverWall(worldMousePos))
+                {
+                    FinishDrawing();
+                    canDraw = false;
+                    return; 
+                }
                 if (Input.GetMouseButtonDown(0))
                 {
                     StartDrawing(worldMousePos);

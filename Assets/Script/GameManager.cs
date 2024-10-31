@@ -9,10 +9,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Sprite _musicImg;
     [SerializeField] private Sprite _muteImg;
     [SerializeField] private List<Text> _levelIndex;
-    [SerializeField] private TextMeshPro _scoreTxt;
-    public GameObject nextLvPanel;
-    public GameObject failPanel;
-    [SerializeField] GameObject endGamePanel;
     private bool isMuted;
     [SerializeField] private List<Button> _musicButtons;
     public static GameManager Instance;
@@ -77,15 +73,6 @@ public class GameManager : MonoBehaviour
     }
 
     public void PauseGame()
-    {
-        Time.timeScale = 0;
-    }
-    public IEnumerator LoseGame(){
-        yield return new WaitForSeconds(1f);
-        //Time.timeScale = 0;
-        failPanel.SetActive(true);
-    }
-    public void EndGame()
     {
         Time.timeScale = 0;
     }

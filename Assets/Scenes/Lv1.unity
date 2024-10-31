@@ -233,10 +233,7 @@ MonoBehaviour:
   - {fileID: 323910639}
   - {fileID: 1257871706}
   - {fileID: 1475970833}
-  _scoreTxt: {fileID: 0}
-  nextLvPanel: {fileID: 0}
-  failPanel: {fileID: 0}
-  endGamePanel: {fileID: 0}
+  - {fileID: 2016139092}
   _musicButtons:
   - {fileID: 1959847461}
 --- !u!4 &93872551
