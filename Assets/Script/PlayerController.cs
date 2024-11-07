@@ -10,7 +10,21 @@ public class PlayerController : MonoBehaviour
     private EdgeCollider2D currentEdgeCollider;
     private List<Vector2> currentPoints;
     public RectTransform containerRect;
-    private bool canDraw = true;
+    public bool canDraw = true;
+    public static PlayerController Instance;
+    private bool isDrawingInterrupted = false; 
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(this);
+        }
+    }
 
     void Update()
     {
@@ -23,25 +37,26 @@ public class PlayerController : MonoBehaviour
             {
                 Vector2 worldMousePos = Camera.main.ScreenToWorldPoint(mousePos);
                 transform.position = worldMousePos;
-                if (IsMouseOverWall(worldMousePos))
-                {
-                    FinishDrawing();
-                    canDraw = false;
-                    return; 
-                }
-                if (Input.GetMouseButtonDown(0))
+
+                if (Input.GetMouseButtonDown(0) && canDraw)
                 {
                     StartDrawing(worldMousePos);
-                    canDraw = true;
+                    isDrawingInterrupted = false; 
                 }
-                else if (Input.GetMouseButton(0) && canDraw)
+                else if (Input.GetMouseButton(0) && canDraw && !isDrawingInterrupted)
                 {
                     UpdateLine(worldMousePos);
+                    if (IsMouseOverWall(worldMousePos))
+                    {
+                        FinishDrawing();
+                        isDrawingInterrupted = true; 
+                    }
                 }
                 else if (Input.GetMouseButtonUp(0))
                 {
-                    canDraw = false;
                     FinishDrawing();
+                    canDraw = true; 
+                    isDrawingInterrupted = false; 
                 }
             }
         }

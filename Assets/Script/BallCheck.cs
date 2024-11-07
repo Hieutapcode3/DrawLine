@@ -24,16 +24,20 @@ public class BallCheck : MonoBehaviour
             Destroy(col.gameObject);
             if((SceneManager.GetActiveScene().buildIndex + 1 == SceneManager.sceneCountInBuildSettings) && endGamePanel != null)
                 StartCoroutine(ActiveEndGamePanel());
-            else
+            else{
                 StartCoroutine(ActiveSuccessPanel());
+                LevelManager.Instance.UnlockNextLevel();
+            }
         }
     }
     private IEnumerator ActiveFailPanel(){
+        AudioManager.Instance.PlayAudioEndGame();
         yield return new WaitForSeconds(0.5f);
         failPanel.SetActive(true);
         Time.timeScale = 0;
     }
     private IEnumerator ActiveSuccessPanel(){
+        AudioManager.Instance.PlayAudioNextLv();
         yield return new WaitForSeconds(0.5f);
         successPanel.SetActive(true);
         Time.timeScale = 0;
@@ -45,6 +49,7 @@ public class BallCheck : MonoBehaviour
         Time.timeScale = 0;
     }
     public void StartGame(){
+        PlayerController.Instance.canDraw = false;
         rb.bodyType = RigidbodyType2D.Dynamic;
     }
 }
